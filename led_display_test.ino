@@ -1,270 +1,446 @@
 /*
- Pin-out of arduino with the LED display is as follows. Refer the attached image to see the LED display's pinout
-   LEd display    |        Arduino
+
+ Connections:
+ Sensor/actuator-------->Arduino
+ 1)moisture sensor------> A0
+ 2)photoresistor--------> A1
+ 3)Temp&humidity sensor--> A2
+ 4)relay for pump--------> 12
+
+    LEd display-1  |        Arduino
    ________________________________
-                  |
-       D1         |    6
-       D2         |    7
-        a         |    8
-        b         |    9
-        c         |    10
-        d         |    11
-        e         |    14
-        f         |    15
-        g         |    16
-  dp,D3,D4        |    No connection
- 
- 
- */ 
+                   |
+     D1/Common     |    2
+        a1         |    4
+        b1         |    4
+        c1         |    5
+        d1         |    7
+        e1         |    8
+        f1         |    9
+        g1         |    10
+        dp1        |    No connection
 
+    LEd display-2  |        Arduino
+   ________________________________
+                   |
+     D2/Common     |    3
+        a2         |    14
+        b2         |    15
+        c2         |    16
+        d2         |    17
+        e2         |    22
+        f2         |    24
+        g2         |    26
+        dp2        |    No connection
 
+ */
 
 //the pins of 4-digit 7-segment display attached to arduino board digital pins 2 - 13 respectively
-const int a = 6;
-const int b = 7;
-const int c = 8;
-const int d = 9;
-const int e = 10;
-const int f = 11;
-const int g = 14;
+const int D1 = 2;
+const int a1 = 4;
+const int b1 = 5;
+const int c1 = 6;
+const int d1 = 7;
+const int e1 = 8;
+const int f1 = 9;
+const int g1 = 10;
 //const int DP = 11;// dot is not used in this project
-const int D1 = 15;
-const int D2 = 16;
 
-int i =0;
+const int D2 = 3;
+const int a2 = 11;
+const int b2 = 12;
+const int c2 = 13;
+const int d2 = A0;
+const int e2 = A1;
+const int f2 = A2;
+const int g2 = A3;
+
 
 void setup()
 {
   Serial.begin(9600);//initialize serial communications at 9600 bps
 //set all the pins of the LED display as output
-  pinMode(a, OUTPUT);
-  pinMode(b, OUTPUT);
-  pinMode(c, OUTPUT);
-  pinMode(d, OUTPUT);
-  pinMode(e, OUTPUT);
-  pinMode(f, OUTPUT);
-  pinMode(g, OUTPUT);
   pinMode(D1, OUTPUT);
+  pinMode(a1, OUTPUT);
+  pinMode(b1, OUTPUT);
+  pinMode(c1, OUTPUT);
+  pinMode(d1, OUTPUT);
+  pinMode(e1, OUTPUT);
+  pinMode(f1, OUTPUT);
+  pinMode(g1, OUTPUT);
+ 
   pinMode(D2, OUTPUT); 
+  pinMode(a2, OUTPUT);
+  pinMode(b2, OUTPUT);
+  pinMode(c2, OUTPUT);
+  pinMode(d2, OUTPUT);
+  pinMode(e2, OUTPUT);
+  pinMode(f2, OUTPUT);
+  pinMode(g2, OUTPUT);
   
   
 }
 
 void loop()
 {
-  digitalWrite(D1, HIGH);
-  i++;
-  pickNumber(i);
-  delay(1000);
-  clearLEDs();
-  
-  if (i == 16)
+  for (int i=1; i<=16; i++)
   {
-    i = 0;
+    Display_on(i);
+    delay(1000);
+    Display_off();
+   
   }
-
-  
 }
 
-void number1()             //Number 1
+void number1(int d)             //Number 1
 {
-  digitalWrite(a, HIGH);
-  digitalWrite(b, LOW);
-  digitalWrite(c, LOW);
-  digitalWrite(d, HIGH);
-  digitalWrite(e, HIGH);
-  digitalWrite(f, HIGH);
-  digitalWrite(g, HIGH);
+  if (d == 1)
+ {
+  digitalWrite(a1, HIGH);
+  digitalWrite(b1, LOW);
+  digitalWrite(c1, LOW);
+  digitalWrite(d1, HIGH);
+  digitalWrite(e1, HIGH);
+  digitalWrite(f1, HIGH);
+  digitalWrite(g1, HIGH);
+  }   
+ else
+ {
+  digitalWrite(a2, HIGH);
+  digitalWrite(b2, LOW);
+  digitalWrite(c2, LOW);
+  digitalWrite(d2, HIGH);
+  digitalWrite(e2, HIGH);
+  digitalWrite(f2, HIGH);
+  digitalWrite(g2, HIGH);
+ }
 }
 
-void number2()             //Number 2
+void number2(int d)             //Number 2
+{ 
+  if (d == 1)
+ {
+  digitalWrite(a1, LOW);
+  digitalWrite(b1, LOW);
+  digitalWrite(c1, HIGH);
+  digitalWrite(d1, LOW);
+  digitalWrite(e1, LOW);
+  digitalWrite(f1, HIGH);
+  digitalWrite(g1, LOW);
+  }   
+ else
+ {
+  digitalWrite(a2, LOW);
+  digitalWrite(b2, LOW);
+  digitalWrite(c2, HIGH);
+  digitalWrite(d2, LOW);
+  digitalWrite(e2, LOW);
+  digitalWrite(f2, HIGH);
+  digitalWrite(g2, LOW);
+ }
+}
+
+void number3(int d)            //Number 3
 {
-  digitalWrite(a, LOW);
-  digitalWrite(b, LOW);
-  digitalWrite(c, HIGH);
-  digitalWrite(d, LOW);
-  digitalWrite(e, LOW);
-  digitalWrite(f, HIGH);
-  digitalWrite(g, LOW);
+  if (d == 1)
+ {
+  digitalWrite(a1, LOW);
+  digitalWrite(b1, LOW);
+  digitalWrite(c1, LOW);
+  digitalWrite(d1, LOW);
+  digitalWrite(e1, HIGH);
+  digitalWrite(f1, HIGH);
+  digitalWrite(g1, LOW);
+  }   
+ else
+ {
+  digitalWrite(a2, LOW);
+  digitalWrite(b2, LOW);
+  digitalWrite(c2, LOW);
+  digitalWrite(d2, LOW);
+  digitalWrite(e2, HIGH);
+  digitalWrite(f2, HIGH);
+  digitalWrite(g2, LOW);
+ }
 }
 
-void number3()            //Number 3
+void number4(int d)             //Number 4
 {
-  digitalWrite(a, LOW);
-  digitalWrite(b, LOW);
-  digitalWrite(c, LOW);
-  digitalWrite(d, LOW);
-  digitalWrite(e, HIGH);
-  digitalWrite(f, HIGH);
-  digitalWrite(g, LOW);
+  if (d == 1)
+ {
+  digitalWrite(a1, HIGH);
+  digitalWrite(b1, LOW);
+  digitalWrite(c1, LOW);
+  digitalWrite(d1, HIGH);
+  digitalWrite(e1, HIGH);
+  digitalWrite(f1, LOW);
+  digitalWrite(g1, LOW);
+  }   
+ else
+ {
+  digitalWrite(a2, HIGH);
+  digitalWrite(b2, LOW);
+  digitalWrite(c2, LOW);
+  digitalWrite(d2, HIGH);
+  digitalWrite(e2, HIGH);
+  digitalWrite(f2, LOW);
+  digitalWrite(g2, LOW);
+ }
 }
 
-void number4()             //Number 4
+void number5(int d)             //Number 5
 {
-  digitalWrite(a, HIGH);
-  digitalWrite(b, LOW);
-  digitalWrite(c, LOW);
-  digitalWrite(d, HIGH);
-  digitalWrite(e, HIGH);
-  digitalWrite(f, LOW);
-  digitalWrite(g, LOW);
+  if (d == 1)
+ {
+  digitalWrite(a1, LOW);
+  digitalWrite(b1, HIGH);
+  digitalWrite(c1, LOW);
+  digitalWrite(d1, LOW);
+  digitalWrite(e1, HIGH);
+  digitalWrite(f1, LOW);
+  digitalWrite(g1, LOW);
+  }   
+ else
+ {
+  digitalWrite(a2, LOW);
+  digitalWrite(b2, HIGH);
+  digitalWrite(c2, LOW);
+  digitalWrite(d2, LOW);
+  digitalWrite(e2, HIGH);
+  digitalWrite(f2, LOW);
+  digitalWrite(g2, LOW);
+ }
 }
 
-void number5()             //Number 5
+void number6(int d)             //Number 6
 {
-  digitalWrite(a, LOW);
-  digitalWrite(b, HIGH);
-  digitalWrite(c, LOW);
-  digitalWrite(d, LOW);
-  digitalWrite(e, HIGH);
-  digitalWrite(f, LOW);
-  digitalWrite(g, LOW);
+  if (d == 1)
+ {
+  digitalWrite(a1, LOW);
+  digitalWrite(b1, HIGH);
+  digitalWrite(c1, LOW);
+  digitalWrite(d1, LOW);
+  digitalWrite(e1, LOW);
+  digitalWrite(f1, LOW);
+  digitalWrite(g1, LOW);
+  }   
+ else
+ {
+  digitalWrite(a2, LOW);
+  digitalWrite(b2, HIGH);
+  digitalWrite(c2, LOW);
+  digitalWrite(d2, LOW);
+  digitalWrite(e2, LOW);
+  digitalWrite(f2, LOW);
+  digitalWrite(g2, LOW);
+ }
 }
 
-void number6()             //Number 6
+void number7(int d)            //Number 7
 {
-  digitalWrite(a, LOW);
-  digitalWrite(b, HIGH);
-  digitalWrite(c, LOW);
-  digitalWrite(d, LOW);
-  digitalWrite(e, LOW);
-  digitalWrite(f, LOW);
-  digitalWrite(g, LOW);
+  if (d == 1)
+ {
+  digitalWrite(a1, LOW);
+  digitalWrite(b1, LOW);
+  digitalWrite(c1, LOW);
+  digitalWrite(d1, HIGH);
+  digitalWrite(e1, HIGH);
+  digitalWrite(f1, HIGH);
+  digitalWrite(g1, HIGH);
+  }   
+ else
+ {
+  digitalWrite(a2, LOW);
+  digitalWrite(b2, LOW);
+  digitalWrite(c2, LOW);
+  digitalWrite(d2, HIGH);
+  digitalWrite(e2, HIGH);
+  digitalWrite(f2, HIGH);
+  digitalWrite(g2, HIGH);
+ }
 }
 
-void number7()            //Number 7
+void number8(int d)            //Number 8
 {
-  digitalWrite(a, LOW);
-  digitalWrite(b, LOW);
-  digitalWrite(c, LOW);
-  digitalWrite(d, HIGH);
-  digitalWrite(e, HIGH);
-  digitalWrite(f, HIGH);
-  digitalWrite(g, HIGH);
+  if (d == 1)
+ {
+  digitalWrite(a1, LOW);
+  digitalWrite(b1, LOW);
+  digitalWrite(c1, LOW);
+  digitalWrite(d1, LOW);
+  digitalWrite(e1, LOW);
+  digitalWrite(f1, LOW);
+  digitalWrite(g1, LOW);
+  }   
+ else
+ {
+  digitalWrite(a2, LOW);
+  digitalWrite(b2, LOW);
+  digitalWrite(c2, LOW);
+  digitalWrite(d2, LOW);
+  digitalWrite(e2, LOW);
+  digitalWrite(f2, LOW);
+  digitalWrite(g2, LOW);
+  }   
 }
 
-void number8()            //Number 8
+
+void number9(int d)             //Number 9
 {
-  digitalWrite(a, LOW);
-  digitalWrite(b, LOW);
-  digitalWrite(c, LOW);
-  digitalWrite(d, LOW);
-  digitalWrite(e, LOW);
-  digitalWrite(f, LOW);
-  digitalWrite(g, LOW);
+  if (d == 1)
+ {
+  digitalWrite(a1, LOW);
+  digitalWrite(b1, LOW);
+  digitalWrite(c1, LOW);
+  digitalWrite(d1, LOW);
+  digitalWrite(e1, HIGH);
+  digitalWrite(f1, LOW);
+  digitalWrite(g1, LOW);
+  }   
+ else
+ {
+  digitalWrite(a2, LOW);
+  digitalWrite(b2, LOW);
+  digitalWrite(c2, LOW);
+  digitalWrite(d2, LOW);
+  digitalWrite(e2, HIGH);
+  digitalWrite(f2, LOW);
+  digitalWrite(g2, LOW); 
+ }
 }
 
-void number9()             //Number 9
+void number0(int d)             //Number 0
 {
-  digitalWrite(a, LOW);
-  digitalWrite(b, LOW);
-  digitalWrite(c, LOW);
-  digitalWrite(d, LOW);
-  digitalWrite(e, HIGH);
-  digitalWrite(f, LOW);
-  digitalWrite(g, LOW);
+  if (d == 1)
+ {
+  digitalWrite(a1, LOW);
+  digitalWrite(b1, LOW);
+  digitalWrite(c1, LOW);
+  digitalWrite(d1, LOW);
+  digitalWrite(e1, LOW);
+  digitalWrite(f1, LOW);
+  digitalWrite(g1, HIGH);
+  }   
+ else
+ {
+  digitalWrite(a2, LOW);
+  digitalWrite(b2, LOW);
+  digitalWrite(c2, LOW);
+  digitalWrite(d2, LOW);
+  digitalWrite(e2, LOW);
+  digitalWrite(f2, LOW);
+  digitalWrite(g2, HIGH);
+ }
 }
 
-void number0()             //Number 0
-{
-  digitalWrite(a, LOW);
-  digitalWrite(b, LOW);
-  digitalWrite(c, LOW);
-  digitalWrite(d, LOW);
-  digitalWrite(e, LOW);
-  digitalWrite(f, LOW);
-  digitalWrite(g, HIGH);
-}
-
-void pickNumber(int x) {
-  switch (x) {
-    case 1: number1(); 
+void Display_on(int state) {
+  switch (state) {
+    
+    case 1: digitalWrite(D1, HIGH);
+            number1(1);
             break;
-    case 2: number2(); 
+            
+            
+    case 2: digitalWrite(D1, HIGH);
+            number2(1);
             break;
-    case 3: number3(); 
+    
+    case 3: digitalWrite(D1, HIGH);
+            number3(1);
             break;
-    case 4: number4(); 
+    
+    case 4: digitalWrite(D1, HIGH);
+            number4(1);
             break;
-    case 5: number5(); 
+    
+    case 5: digitalWrite(D1, HIGH);
+            number5(1);
             break;
-    case 6: number6(); 
+    
+    case 6: digitalWrite(D1, HIGH);
+            number6(1);
             break;
-    case 7: number7(); 
+    
+    case 7: digitalWrite(D1, HIGH);
+            number7(1);
             break;
-    case 8: number8(); 
+    
+    case 8: digitalWrite(D1, HIGH);
+            number8(1);
             break;
-    case 9: number9(); 
+    
+    case 9: digitalWrite(D1, HIGH);
+            number9(1);
             break;
-    case 10: number1();
-             delay(50);
-             digitalWrite(D1,LOW);
+    
+    case 10: digitalWrite(D1, HIGH);
+             number1(1);
              digitalWrite(D2, HIGH);
-             number0();
-             delay(50);
-             digitalWrite(D2, LOW);
+             number0(2);
              break;
-    case 11: number1();
-             delay(50);
-             digitalWrite(D1,LOW);
+    
+    case 11: digitalWrite(D1, HIGH);
+             number1(1);
              digitalWrite(D2, HIGH);
-             number1();
-             delay(50);
-             digitalWrite(D2, LOW);
+             number1(2);
              break;
-    case 12: number1();
-             delay(50);
-             digitalWrite(D1,LOW);
+    
+    case 12: digitalWrite(D1, HIGH);
+             number1(1);
              digitalWrite(D2, HIGH);
-             number2();
-             delay(50);
-             digitalWrite(D2, LOW);
+             number2(2);
              break;
-    case 13: number1();
-             delay(50);
-             digitalWrite(D1,LOW);
+    
+    case 13: digitalWrite(D1, HIGH);
+             number1(1);
              digitalWrite(D2, HIGH);
-             number3();
-             delay(50);
-             digitalWrite(D2, LOW);
+             number3(2);
              break;
-    case 14: number1();
-             delay(50);
-             digitalWrite(D1,LOW);
+    
+    case 14: digitalWrite(D1, HIGH);
+             number1(1);
              digitalWrite(D2, HIGH);
-             number4();
-             delay(50);
-             digitalWrite(D2, LOW);
+             number4(2);
              break;
-    case 15: number1();
-             delay(50);
-             digitalWrite(D1,LOW);
+    
+    case 15: digitalWrite(D1, HIGH);
+             number1(1);
              digitalWrite(D2, HIGH);
-             number5();
-             delay(50);
-             digitalWrite(D2, LOW);
+             number5(2);
              break;
-    case 16: number1();
-             delay(50);
-             digitalWrite(D1,LOW);
+    
+    case 16: digitalWrite(D1, HIGH);
+             number1(1);
              digitalWrite(D2, HIGH);
-             number6();
-             delay(50);
-             digitalWrite(D2, LOW);
+             number6(2);
              break;
-    default: number0(); 
+    
+    default: digitalWrite(D1, HIGH);
+             number0(1);
+             digitalWrite(D2, HIGH);
+             number0(2);
              break;
   }
 }
 //*************************************************************
-void clearLEDs()
+void Display_off()
 {
-  digitalWrite(a, HIGH);
-  digitalWrite(b, HIGH);
-  digitalWrite(c, HIGH);
-  digitalWrite(d, HIGH);
-  digitalWrite(e, HIGH);
-  digitalWrite(f, HIGH);
-  digitalWrite(g, HIGH);
+  digitalWrite(D1, LOW);
+  digitalWrite(D2, LOW);
+  
+  digitalWrite(a1, HIGH);
+  digitalWrite(b1, HIGH);
+  digitalWrite(c1, HIGH);
+  digitalWrite(d1, HIGH);
+  digitalWrite(e1, HIGH);
+  digitalWrite(f1, HIGH);
+  digitalWrite(g1, HIGH);
+  
+  digitalWrite(a2, HIGH);
+  digitalWrite(b2, HIGH);
+  digitalWrite(c2, HIGH);
+  digitalWrite(d2, HIGH);
+  digitalWrite(e2, HIGH);
+  digitalWrite(f2, HIGH);
+  digitalWrite(g2, HIGH);
 }
-
