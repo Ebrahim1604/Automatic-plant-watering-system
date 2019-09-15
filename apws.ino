@@ -96,6 +96,7 @@ void setup() {
   pinMode(g2, OUTPUT);
 
   pinMode(relay_for_pump, OUTPUT);
+  digitalWrite(relay_for_pump, LOW);
  
 }
 
