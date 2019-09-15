@@ -94,6 +94,8 @@ void setup() {
   pinMode(e2, OUTPUT);
   pinMode(f2, OUTPUT);
   pinMode(g2, OUTPUT);
+
+  pinMode(relay_for_pump, OUTPUT);
  
 }
 
