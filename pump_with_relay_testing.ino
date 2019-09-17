@@ -5,6 +5,7 @@
 
 const int trigger = A3;
 const int relay = A8;
+const int interrupt_pin = 21;
 
 void wait_in_millis(unsigned long ms)
 {
@@ -165,6 +166,8 @@ void setup() {
   Serial.begin(9600);
 
   write_digital_pin(relay,HIGH);
+  pinMode(interrupt_pin, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(interrupt_pin), Pause, LOW);
 }
 
 void loop() {
@@ -198,4 +201,20 @@ void loop() {
 
     }
 } 
+
+void Pause()
+{
+  digitalWrite(relay, HIGH);
+  stay_paused:
+               if (digitalRead(interrupt_pin) == HIGH)
+                 {
+                   Serial.println("Program resumes");
+                   return;
+                 }
+                else
+                {
+                  Serial.println("Program in pause mode");
+                  goto stay_paused;
+                }
+  }
 
