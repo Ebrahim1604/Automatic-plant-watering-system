@@ -458,6 +458,7 @@ void setup() {
   assign_digital_pin(f2, OUTPUT);
   assign_digital_pin(g2, OUTPUT);
 
+ assign_digital_pin(relay_for_pump, OUTPUT);
  attach_interrupt_pin(2, Pause, LOW);
 }
 
@@ -955,9 +956,9 @@ void stateaction(int* val){
     Serial.print("Watering time = ");
     Serial.print(val[2]/1000);
     Serial.println("secs");
-    write_digital_pin(relay_for_pump, HIGH);
-    wait_in_millis(val[2]);
     write_digital_pin(relay_for_pump, LOW);
+    wait_in_millis(val[2]);
+    write_digital_pin(relay_for_pump, HIGH);
     
     Display_off();
   }
